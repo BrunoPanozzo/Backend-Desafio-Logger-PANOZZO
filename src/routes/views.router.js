@@ -45,7 +45,18 @@ class ViewRouter extends BaseRouter {
 
         this.get('/profile', [USER, ADMIN, SUPER_ADMIN], userIsLoggedIn, withController((controller, req, res) => controller.profile(req, res)))
 
+        //endpoint de mockings
+
+        this.get('/mockingproducts/', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.mockingProducts(req, res)))
+
+        this.get('/mockingusers', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.mockingUsers(req, res)))
+
+        //endpoint testLogger
+
+        this.get('/loggerTest', withController((controller, req, res) => controller.loggerTest(req, res)))
+
     }
+    
 }
 
 module.exports = ViewRouter

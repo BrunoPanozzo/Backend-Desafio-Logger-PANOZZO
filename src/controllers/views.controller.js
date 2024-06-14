@@ -1,5 +1,7 @@
 const ProductsServices = require('../services/products/products.service')
 const CartsServices = require('../services/carts/carts.service')
+const { generateProduct } = require('../mocks/generateProducts')
+const { generateUser } = require("../mocks/generateUsers")
 
 const { CartDAO, ProductDAO } = require('../dao/factory')
 const { ADMIN, SUPER_ADMIN } = require('../config/policies.constants')
@@ -283,6 +285,37 @@ class ViewsController {
         catch (err) {
             //return res.status(500).json({ message: err.message })
             return res.sendServerError(err)
+        }
+    }
+    
+    mockingProducts(req, res) {
+        const products = []
+        for (let i = 0; i < 100; i++) {
+            products.push(generateProduct())
+        }
+        res.json(products)
+    }
+    
+    mockingUsers(req, res) {
+        const users = []
+        for (let i = 0; i < 100; i++) {
+            users.push(generateUser())
+        }
+        res.json(users)
+    }
+
+    loggerTest (req, res) {
+        try {
+            req.logger.debug()
+            req.logger.http()
+            req.logger.info()
+            req.logger.warning()
+            req.logger.error()
+            req.logger.fatal()
+            res.sendSuccess('Logger test finalizó exitosamente')
+        }
+        catch(err) {
+            return res.sendServerError({message: 'Error en el logger test'})
         }
     }
 

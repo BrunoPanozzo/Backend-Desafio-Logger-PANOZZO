@@ -23,6 +23,8 @@ const { routers } = require('./routes/routersSetup')
 const dbMessageManager = require('./dao/dbManagers/MessageManager')
 const { errorHandler } = require('./services/errors/errorHandler')
 
+const { useLogger } = require('./utils/logger')
+
 //instanciar mi app
 const app = express()
 
@@ -57,6 +59,8 @@ app.use(sessionMiddleware)
 initializeStrategy()
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(useLogger)
 
 const main = async () => {
 

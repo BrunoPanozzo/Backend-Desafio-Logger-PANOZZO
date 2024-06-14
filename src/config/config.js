@@ -5,7 +5,7 @@ dotenv.config()
 module.exports = {
     PERSISTENCE:process.env.PERSISTENCE,
     MONGO_URL:process.env.MONGO_URL,
-    ENV:process.env.ENV,
+    NODE_ENV:process.env.NODE_ENV,
     SECRET:process.env.SECRET,
     PORT:process.env.PORT,
     DBNAME:process.env.DBNAME,

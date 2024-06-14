@@ -40,8 +40,6 @@ class SessionRouter extends BaseRouter {
         this.get('/logout', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.logout(req, res)))
 
         this.get('/current', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.current(req, res)))
-
-        this.get('/mockingusers', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.mockingUsers(req, res)))
     }
 }
 

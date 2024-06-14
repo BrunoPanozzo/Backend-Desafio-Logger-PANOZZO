@@ -23,8 +23,6 @@ class ProductRouter extends BaseRouter {
 
         this.delete('/:pid', [ADMIN, SUPER_ADMIN], userIsLoggedIn, userIsAdmin, validateProduct, withController((controller, req, res) => controller.deleteProduct(req, res)))
 
-        this.get('/mockingproducts/', [USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.mockingProducts(req, res)))
-
         this.get('/:pid', [USER], validateProduct, withController((controller, req, res) => controller.getProductById(req, res)))
     }
 }
