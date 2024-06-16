@@ -21,7 +21,7 @@ class CartsController {
             return
         }
         catch (err) {
-            console.log(err)
+            //console.log(err)
             // return res.status(500).json({ message: err.message })
             return res.sendServerError(err)
         }
@@ -161,7 +161,7 @@ class CartsController {
                 res.sendSuccess(remainingCart)
         }
         catch (err) {
-            console.error(err)
+            //console.error(err)
             return res.sendServerError(`El servidor no pudo completar el proceso de compra del carrito con ID ${cartId}, reintente en unos segundos...`)
         }
     }

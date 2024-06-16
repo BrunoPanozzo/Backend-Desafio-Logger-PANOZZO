@@ -69,7 +69,7 @@ class BaseRouter {
                 // en el 2do argumento, viene un array de parámetros que usa el callback
                 await callback.apply(this, params)
             } catch (err) {
-                console.log(err)
+                //console.error(err)
 
                 // nuestra función flecha es un middleware también, entonces sabemos que params será [req, res, next]
                 const [, res,] = params
@@ -80,14 +80,30 @@ class BaseRouter {
     }
 
     generateCustomResponse(req, res, next) {
-        res.sendSuccess = payload => res.send({ status: 'success', payload })
-        res.sendCreated = payload => res.status(201).send({ status: 'success', payload })
-
-        res.sendUserError = error => res.status(400).send({ status: 'error', error })
-        res.sendUnauthorizedError = error => res.status(401).send({ status: 'error', error })
-        res.sendNotFoundError = error => res.status(404).send({ status: 'error', error })
-
-        res.sendServerError = error => res.status(500).send({ status: 'error', error })
+        res.sendSuccess = payload => {
+            req.logger.info('Success: ' + payload)
+            res.send({ status: 'success', payload })
+        }
+        res.sendCreated = payload => {
+            req.logger.info('Success: ' + payload)
+            res.status(201).send({ status: 'success', payload })
+        }
+        res.sendUserError = error => {
+            req.logger.error('Error: ' + error)
+            res.status(400).send({ status: 'error', error })
+        }
+        res.sendUnauthorizedError = error => {
+            req.logger.warning('Unauthorization error: ' + error)
+            res.status(401).send({ status: 'error', error })
+        }
+        res.sendNotFoundError = error => {
+            req.logger.fatal('Not found error: ' + error)
+            res.status(404).send({ status: 'error', error })
+        }
+        res.sendServerError = error => {
+            req.logger.error('Server error: ' + error)
+            res.status(500).send({ status: 'error', error })
+        }
 
         next()
     }
@@ -98,7 +114,7 @@ class BaseRouter {
                 return next()
 
             //habilito el siguiente caso de uso para poder probar desde POSTMAN y no tener que iniciar sesión
-            if (policies.includes(USER)||policies.includes(ADMIN)||policies.includes(SUPER_ADMIN))
+            if (policies.includes(USER) || policies.includes(ADMIN) || policies.includes(SUPER_ADMIN))
                 return next()
             //
 

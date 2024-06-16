@@ -45,7 +45,7 @@ class ProductDAO {
             // return filteredProducts.map(d => d.toObject({ virtuals: true }))
         }
         catch (err) {
-            console.log({ error: err })
+            console.error({ error: err })
             return []
         }
     }

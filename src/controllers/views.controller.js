@@ -123,7 +123,7 @@ class ViewsController {
             res.render('productDetail', data)
         }
         catch (err) {
-            console.log(err)
+            return res.sendServerError(err)
         }
     }
 

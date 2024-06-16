@@ -29,29 +29,29 @@ const esPositivo = (cadena) => {
 }
 
 //validar los campos de un "objeto" producto
-const validateProductData = (title, description, price, thumbnail, code, stock, status, category) => {
+const validateProductData = (req, title, description, price, thumbnail, code, stock, status, category) => {
     //validar que el campo "title" no esté vacío        
     if (title.trim().length <= 0) {
-        console.error("El campo \"title\" es inválido")
+        //console.error("El campo \"title\" es inválido")
+        req.logger.error("El campo \"title\" es inválido")
         return false
     }
     //validar que el campo "description" no esté vacío
     if (description.trim().length <= 0) {
-        console.error("El campo \"description\" es inválido")
+        //console.error("El campo \"description\" es inválido")
+        req.logger.error("El campo \"description\" es inválido")
         return false
     }
     //validar que el campo "price" contenga sólo números
     if ((!soloNumerosPositivos(price)) || (typeof price != "number")) {
-        console.error("El campo \"price\" no es un número positivo")
+        //console.error("El campo \"price\" no es un número positivo")
+        req.logger.error("El campo \"price\" no es un número positivo")
         return false
     }
     //el campo "thumbnail" puede estar vacío, por eso queda comentado la validacion anterior, solo
     //verificar que es un arreglo de strings
-    // if (thumbnail.trim().length <= 0) {
-    //     console.error("El campo \"thumbnail\" es inválido")
-    //     return false
-    // 
     if (!Array.isArray(thumbnail)) {
+        req.looger.error("El campo \"thumbnail\" no respeta el formato esperado.")
         return false
     }
     else {
@@ -59,28 +59,34 @@ const validateProductData = (title, description, price, thumbnail, code, stock, 
         do {
             pos++
         } while ((pos < thumbnail.length) && (typeof thumbnail[pos] == "string"));
-        if (pos != thumbnail.length)
+        if (pos != thumbnail.length) {
+            req.looger.error("El campo \"thumbnail\" no respeta el formato esperado.")
             return false
+        }
     }
     //validar que el campo "status" sea booleano
     if (typeof status != "boolean") {
-        console.error("El campo \"status\" no es booleano")
+        //console.error("El campo \"status\" no es booleano")
+        req.logger.error("El campo \"status\" no es booleano")
         return false
     }
     //validar que el campo "category"  no esté vacío
     if (category.trim().length <= 0) {
-        console.error("El campo \"category\" es inválido")
+        //console.error("El campo \"category\" es inválido")
+        req.logger.error("El campo \"category\" es inválido")
         return false
     }
     //validar que el campo "code" contenga sólo números y letras
     const codeAValidar = code.trim()
     if ((codeAValidar.length <= 0) || (!soloLetrasYNumeros(codeAValidar))) {
-        console.error("El campo \"code\" es inválido")
+        //console.error("El campo \"code\" es inválido")
+        req.logger.error("El campo \"code\" es inválido")
         return false
     }
     //validar que el campo "stock" contenga sólo números
     if ((!soloNumerosPositivos_Y_Cero(stock)) || (typeof stock != "number")) {
-        console.error("El campo \"stock\" no es un número")
+        //console.error("El campo \"stock\" no es un número")
+        req.logger.error("El campo \"stock\" no es un número")
         return false
     }
     return true
@@ -105,7 +111,7 @@ const validateNewProduct = async (req, res, next) => {
     const category = product.category
 
     try {
-        if (validateProductData(title,
+        if (validateProductData(req, title,
             description,
             price,
             thumbnail,
@@ -194,7 +200,7 @@ const validateUpdateProduct = async (req, res, next) => {
                 : res.status(500).jsonServerError({ message: 'Something went wrong!' })
         }
 
-        if (validateProductData(title,
+        if (validateProductData(req, title,
             description,
             price,
             thumbnail,
