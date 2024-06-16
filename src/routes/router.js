@@ -97,11 +97,11 @@ class BaseRouter {
             res.status(401).send({ status: 'error', error })
         }
         res.sendNotFoundError = error => {
-            req.logger.fatal('Not found error: ' + error)
+            req.logger.error('Not found error: ' + error)
             res.status(404).send({ status: 'error', error })
         }
         res.sendServerError = error => {
-            req.logger.error('Server error: ' + error)
+            req.logger.fatal('Server error: ' + error)
             res.status(500).send({ status: 'error', error })
         }
 

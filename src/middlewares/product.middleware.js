@@ -51,7 +51,7 @@ const validateProductData = (req, title, description, price, thumbnail, code, st
     //el campo "thumbnail" puede estar vacío, por eso queda comentado la validacion anterior, solo
     //verificar que es un arreglo de strings
     if (!Array.isArray(thumbnail)) {
-        req.looger.error("El campo \"thumbnail\" no respeta el formato esperado.")
+        req.logger.error("El campo \"thumbnail\" no respeta el formato esperado.")
         return false
     }
     else {
@@ -60,7 +60,7 @@ const validateProductData = (req, title, description, price, thumbnail, code, st
             pos++
         } while ((pos < thumbnail.length) && (typeof thumbnail[pos] == "string"));
         if (pos != thumbnail.length) {
-            req.looger.error("El campo \"thumbnail\" no respeta el formato esperado.")
+            req.logger.error("El campo \"thumbnail\" no respeta el formato esperado.")
             return false
         }
     }
