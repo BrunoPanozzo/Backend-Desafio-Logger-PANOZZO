@@ -45,14 +45,14 @@ const prodLogger = winston.createLogger({
             )
         }),
         new winston.transports.File({
-            filename: `${__dirname}/../logs/errors.log`,
+            filename: 'errors.log',
             level: 'error',
             format: winston.format.simple()
         })
     ]
 })
 
-const logger = process.env.NODE_ENV === 'production'
+const logger = process.env.NODE_ENV == 'production'
     ? prodLogger
     : devLogger
 
