@@ -53,10 +53,10 @@ class ViewRouter extends BaseRouter {
 
         //endpoint testLogger
 
-        this.get('/loggerTest', withController((controller, req, res) => controller.loggerTest(req, res)))
+        this.get('/loggerTest', [PUBLIC, USER, ADMIN, SUPER_ADMIN], withController((controller, req, res) => controller.loggerTest(req, res)))
 
     }
-    
+
 }
 
 module.exports = ViewRouter

@@ -306,16 +306,16 @@ class ViewsController {
 
     loggerTest (req, res) {
         try {
-            req.logger.debug()
-            req.logger.http()
-            req.logger.info()
-            req.logger.warning()
-            req.logger.error()
-            req.logger.fatal()
+            req.logger.debug('DEBUG test example')
+            req.logger.http('HTTP test example')
+            req.logger.info('INFO test example')
+            req.logger.warning('WARNING test example')
+            req.logger.error('ERROR test example')
+            req.logger.fatal('FATAL test example')
             res.sendSuccess('Logger test finalizó exitosamente')
         }
         catch(err) {
-            return res.sendServerError({message: 'Error en el logger test'})
+            return res.sendServerError(err)  //{message: 'Error en el logger test'})
         }
     }
 
